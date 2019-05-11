@@ -28,11 +28,11 @@ TIMEOUT = 60
 @cache.memoize(timeout=TIMEOUT)
 def load_model():
     # Shout-out to GitHub user eyaler for creating a small version of word2vec (https://github.com/eyaler/word2vec-slim)
-    model = KeyedVectors.load_word2vec_format('https://s3-ap-southeast-1.amazonaws.com/understanding-nlp/GoogleNews-vectors-negative300-SLIM.bin.gz', binary=True)
+    model = KeyedVectors.load_word2vec_format('https://s3-ap-southeast-1.amazonaws.com/understanding-nlp/word2vec.twitter.27B.25d.bin', binary=True)
     return model
 
 
-MODEL = KeyedVectors.load_word2vec_format('data/GoogleNews-vectors-negative300-SLIM.bin.gz', binary=True)
+MODEL = KeyedVectors.load_word2vec_format('https://s3-ap-southeast-1.amazonaws.com/understanding-nlp/word2vec.twitter.27B.25d.bin', binary=True)
 
 layout = dbc.Container(
     children=[
