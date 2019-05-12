@@ -72,7 +72,7 @@ layout = dbc.Container(
                             clearable=False,
                             options= [{'label': word, 'value': word} for word in ['food', 'coffee', 'sex', 'viagra',
                                                                                   'example', 'king', 'male']], #[{'label': word, 'value': word} for word in MODEL.index2word],
-                            value=['example'],
+                            value='example',
                             multi=True
                         ),
 

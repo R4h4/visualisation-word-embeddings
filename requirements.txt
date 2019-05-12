@@ -20,6 +20,7 @@ Flask==1.0.2
 Flask-Compress==1.4.0
 future==0.16.0
 gensim==3.7.3
+gunicorn==19.9.0
 hjson==3.0.1
 idna==2.8
 ipython-genutils==0.2.0
