@@ -6,7 +6,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
-from flask_caching import Cache
+# from flask_caching import Cache
 
 import numpy as np
 from gensim.models import KeyedVectors
@@ -17,19 +17,20 @@ from app import app
 app.title = 'Word-Embeddings Visualized by Karsten Eckhardt'
 
 # TODO: Implement Caching of the Dataset + Dropdown
-cache = Cache(app.server, config={
-    'CACHE_TYPE': 'filesystem',
-    'CACHE_DIR': 'cache-directory'
-})
+# cache = Cache(app.server, config={
+#    'CACHE_TYPE': 'filesystem',
+#    'CACHE_DIR': 'cache-directory'
+#})
 
-TIMEOUT = 60
+#TIMEOUT = 60
 
-
+"""
 @cache.memoize(timeout=TIMEOUT)
 def load_model():
     # Shout-out to GitHub user eyaler for creating a small version of word2vec (https://github.com/eyaler/word2vec-slim)
     model = KeyedVectors.load_word2vec_format('https://s3-ap-southeast-1.amazonaws.com/understanding-nlp/word2vec.twitter.27B.25d.bin', binary=True)
     return model
+"""
 
 
 MODEL = KeyedVectors.load_word2vec_format('https://s3-ap-southeast-1.amazonaws.com/understanding-nlp/word2vec.twitter.27B.25d.bin', binary=True)
@@ -60,6 +61,7 @@ layout = dbc.Container(
                     ],
                     md=4,
                 ),
+
                 dbc.Col(
                     [
                         dcc.Dropdown(
@@ -68,9 +70,12 @@ layout = dbc.Container(
                                 'margin-left': '6rm'
                             },
                             clearable=False,
-                            options=[{'label': word, 'value': word} for word in MODEL.index2word],
+                            options= [{'label': word, 'value': word} for word in ['food', 'coffee', 'sex', 'viagra',
+                                                                                  'example', 'king', 'male']], #[{'label': word, 'value': word} for word in MODEL.index2word],
+                            value=['example'],
                             multi=True
                         ),
+
                         dcc.Loading(
                             id="loading-2",
                             children=[
@@ -128,7 +133,8 @@ def tsne_plot_similar_words(labels, embedding_clusters, word_clusters):
 def callback(picked_words):
     logging.debug(f"Reloading chart, picked words are: {picked_words}.")
 
-    axis_style = dict(
+    axis_style = dict()
+    _ = dict(
         showgrid=False,
         zeroline=False,
         showticklabels=False
@@ -138,8 +144,8 @@ def callback(picked_words):
         embedding_clusters = []
         word_clusters = []
         for word in picked_words:
-            embeddings = []
-            words = []
+            embeddings = [MODEL[word]]
+            words = [word]
             for similar_word, _ in MODEL.wv.most_similar(word, topn=20):
                 words.append(similar_word)
                 embeddings.append(MODEL[similar_word])
@@ -167,3 +173,4 @@ def callback(picked_words):
                     }
                 }
             }
+

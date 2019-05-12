@@ -1,15 +1,14 @@
 {
     "dev": {
-        "app_function": "word-embeddings.app",
+        "app_function": "index.server",
         "aws_region": "ap-southeast-1",
         "profile_name": "karsten-zappa",
-        "project_name": "word-embeddings",
         "runtime": "python3.6",
         "s3_bucket": "understanding-nlp",
-        "aws_region": "ap-southeast-1",
         "slim_handler": true,
         "memory_size": 1024,
         "lambda_description": "Zappa understanding-nlp deployment",
-        "project_name": "Understanding-NLP"
+        "project_name": "Understanding-NLP",
+        "domain": "nlp.longdr.com"
     }
 }
