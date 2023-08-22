@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import html, dcc
 from dash.dependencies import Input, Output
 from app import app, server  # Import server for Gunicorn
 from apps import app_w2v_visualized
